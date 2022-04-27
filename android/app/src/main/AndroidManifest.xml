@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amar.awquiz">
    <application
-        android:label="Awquiz"
+        android:label="CLAT App"
         android:icon="@drawable/app_logo">
         <activity
             android:name=".MainActivity"

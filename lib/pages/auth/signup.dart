@@ -35,7 +35,7 @@ class _SignupPageState extends State<SignupPage> {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.green[100],
+                color: Colors.blue[100],
                 shape: BoxShape.circle,
               ),
             ),
@@ -47,7 +47,7 @@ class _SignupPageState extends State<SignupPage> {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.green[100],
+                color: Colors.blue[100],
                 shape: BoxShape.circle,
               ),
             ),
@@ -57,16 +57,16 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 SizedBox(height: 100),
                 SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Image.asset("assets/app_logo.png"),
+                  width:200,
+                  height:200,
+                  child: Image.asset("assets/2.png"),
                 ),
-                Center(
-                  child: Text(
-                    "Create account",
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ),
+                // Center(
+                //   child: Text(
+                //     "Create account",
+                //     style: Theme.of(context).textTheme.headline6,
+                //   ),
+                // ),
                 Form(
                   key: _formKey,
                   child: Padding(

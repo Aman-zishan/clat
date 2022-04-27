@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_overboard/flutter_overboard.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   configure();
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,10 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Awquiz',
+      title: 'CLAT App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
       ),
       home: FutureBuilder(
         future: Firebase.initializeApp(),

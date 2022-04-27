@@ -9,11 +9,9 @@ class QuizController extends GetxController {
   int questionAmount = 10;
   RxInt score = 0.obs;
   RxList categories = [
-    QuizCategory("Science: Computers", 18, "Easy"),
-    QuizCategory("Entertainment: Video Games", 15, "Hard"),
+    QuizCategory("Politics", 24, "medium"),
+    QuizCategory("General Knowledge", 9, "Hard"),
     QuizCategory("Science & Nature", 17, "Medium"),
-    QuizCategory("Celebrities", 26, "Easy"),
-    QuizCategory("Entertainment: Books", 10, "Easy"),
     QuizCategory("History", 23, "Medium"),
   ].obs;
   RxList questions = [].obs;

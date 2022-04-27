@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.green[100],
+                color: Colors.blue[100],
                 shape: BoxShape.circle,
               ),
             ),
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 150,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.green[100],
+                color: Colors.blue[100],
                 shape: BoxShape.circle,
               ),
             ),
@@ -57,16 +57,16 @@ class _LoginPageState extends State<LoginPage> {
             child: ListView(
               children: [
                 SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Image.asset("assets/app_logo.png"),
+                  width: 200,
+                  height: 200,
+                  child: Image.asset("assets/2.png"),
                 ),
-                Center(
-                  child: Text(
-                    "Login",
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ),
+                // Center(
+                //   child: Text(
+                //     "Login",
+                //     style: Theme.of(context).textTheme.headline6,
+                //   ),
+                // ),
                 Form(
                   key: _formKey,
                   child: Padding(
@@ -123,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
+                                
                                 child: Text("Login"),
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
@@ -170,64 +171,64 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: GoogleAuthButton(
-                                onPressed: () async {
-                                  GoogleSignIn _googleSignIn = GoogleSignIn(
-                                    scopes: <String>['email'],
-                                  );
-                                  try {
-                                    GoogleSignInAccount? googleUser =
-                                        await _googleSignIn.signIn();
-                                    if (googleUser != null) {
-                                      GoogleSignInAuthentication googleAuth =
-                                          await googleUser.authentication;
-                                      AuthCredential credential =
-                                          GoogleAuthProvider.credential(
-                                        idToken: googleAuth.idToken,
-                                        accessToken: googleAuth.accessToken,
-                                      );
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: GoogleAuthButton(
+                        //         onPressed: () async {
+                        //           GoogleSignIn _googleSignIn = GoogleSignIn(
+                        //             scopes: <String>['email'],
+                        //           );
+                        //           try {
+                        //             GoogleSignInAccount? googleUser =
+                        //                 await _googleSignIn.signIn();
+                        //             if (googleUser != null) {
+                        //               GoogleSignInAuthentication googleAuth =
+                        //                   await googleUser.authentication;
+                        //               AuthCredential credential =
+                        //                   GoogleAuthProvider.credential(
+                        //                 idToken: googleAuth.idToken,
+                        //                 accessToken: googleAuth.accessToken,
+                        //               );
 
-                                      await FirebaseAuth.instance
-                                          .signInWithCredential(credential);
-                                      Navigator.of(context).pushReplacement(
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation,
-                                                  secondaryAnimation) =>
-                                              HomePage(),
-                                          transitionsBuilder: (context,
-                                                  animation,
-                                                  secondaryAnimation,
-                                                  child) =>
-                                              FadeTransition(
-                                            opacity: animation,
-                                            child: child,
-                                          ),
-                                        ),
-                                      );
+                        //               await FirebaseAuth.instance
+                        //                   .signInWithCredential(credential);
+                        //               Navigator.of(context).pushReplacement(
+                        //                 PageRouteBuilder(
+                        //                   pageBuilder: (context, animation,
+                        //                           secondaryAnimation) =>
+                        //                       HomePage(),
+                        //                   transitionsBuilder: (context,
+                        //                           animation,
+                        //                           secondaryAnimation,
+                        //                           child) =>
+                        //                       FadeTransition(
+                        //                     opacity: animation,
+                        //                     child: child,
+                        //                   ),
+                        //                 ),
+                        //               );
 
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text("Login Successful"),
-                                        ),
-                                      );
-                                    }
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text("Login Failed"),
-                                      ),
-                                    );
-                                  }
-                                },
-                                darkMode: false,
-                              ),
-                            ),
-                          ],
-                        ),
+                        //               ScaffoldMessenger.of(context)
+                        //                   .showSnackBar(
+                        //                 SnackBar(
+                        //                   content: Text("Login Successful"),
+                        //                 ),
+                        //               );
+                        //             }
+                        //           } catch (e) {
+                        //             ScaffoldMessenger.of(context).showSnackBar(
+                        //               SnackBar(
+                        //                 content: Text("Login Failed"),
+                        //               ),
+                        //             );
+                        //           }
+                        //         },
+                        //         darkMode: false,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
