@@ -15,29 +15,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
     PageModel(
         color: Colors.black,
         imageAssetPath: 'assets/1.png',
-        title: 'Screen 1',
+        title: 'Current Affairs',
         
-        body: 'Share your ideas with the team',
+        body: 'Stay updated',
         doAnimateImage: true),
     PageModel(
         color: Colors.green,
         imageAssetPath: 'assets/1.png',
-        title: 'Screen 2',
-        body: 'See the increase in productivity & output',
+        title: 'Previous Year papers',
+        body: 'Practice makes you perfect',
         doAnimateImage: true),
     PageModel(
         color: Colors.purple,
         imageAssetPath: 'assets/1.png',
-        title: 'Screen 3',
-        body: 'Connect with the people from different places',
+        title: 'Syllabus',
+        body: 'Know more about the syllabus',
         doAnimateImage: true),
-    PageModel.withChild(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 25.0),
-          child: Image.asset('assets/1.png', width: 300.0, height: 300.0),
-        ),
-        color: Colors.black,
-        doAnimateChild: false)
+    
   ];
   @override
   Widget build(BuildContext context) {

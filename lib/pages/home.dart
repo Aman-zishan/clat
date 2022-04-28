@@ -1,18 +1,20 @@
 import 'package:awquiz/controllers/quiz_controller.dart';
+import 'package:awquiz/pages/home/news_page.dart';
 import 'package:awquiz/pages/onboarding.dart';
 import 'package:awquiz/widgets/my_bottom_navigation_bar_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/news_controller.dart';
 import '../widgets/nav_bar.dart';
+import 'home/about_page.dart';
 import 'home/news_card.dart';
 import 'home/quiz_category_card.dart';
-import 'home/quiz_search.dart';
+
 import 'package:settings_ui/settings_ui.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 Future<News> fetchNews() async {
   final response = await http
@@ -25,7 +27,7 @@ Future<News> fetchNews() async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load news');
   }
 }
 
@@ -63,7 +65,7 @@ class Articles {
   String? author;
   String? title;
   String? description;
-  String? url;
+  String url = "";
   String? urlToImage;
   String? publishedAt;
   String? content;
@@ -73,7 +75,7 @@ class Articles {
       this.author,
       this.title,
       this.description,
-      this.url,
+      required this.url,
       this.urlToImage,
       this.publishedAt,
       this.content});
@@ -133,7 +135,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List quizImages = ["5", "6", "7", "8", "9"];
+  List quizImages = ["https://www.imf.org/external/pubs/ft/fandd/2020/06/images/frieden-1600.jpg",
+   "https://leverageedu.com/blog/wp-content/uploads/2020/02/General-Knowledge-for-Kids.jpg", 
+   "https://www.issnationallab.org/wp-content/uploads/baby_groot.jpg",
+    "https://www.anratechnologies.com/home/wp-content/uploads/2016/11/history-1024x576.jpg",
+     "https://www.anratechnologies.com/home/wp-content/uploads/2016/11/history-1024x576.jpg"];
   var currentPosition = 0;
   late Future<News> futureNews;
   
@@ -155,31 +161,31 @@ showElevation: true,
 selectedPosition: currentPosition,
 onItemSelected: (index) => setState(() => currentPosition = index),
 items: <MyBottomNavigationBarItem>[
-// MyBottomNavigationBarItem(
-//     icon: Icon(Icons.home),
-//     title: Text("Home"),
-//     activeColor: Colors.orangeAccent,
-//     inactiveColor: inactiveColor,
-//     textAlign: TextAlign.center,
-// ),
+MyBottomNavigationBarItem(
+    icon: Icon(Icons.home),
+    title: Text("Home"),
+    activeColor: Colors.lightBlueAccent,
+    inactiveColor: inactiveColor,
+    textAlign: TextAlign.center,
+),
 MyBottomNavigationBarItem(
     icon: Icon(Icons.question_answer),
     title: Text("Quiz"),
-    activeColor: Colors.pinkAccent,
+    activeColor: Colors.lightBlueAccent,
     inactiveColor: inactiveColor,
     textAlign: TextAlign.center,
 ),
 MyBottomNavigationBarItem(
     icon: Icon(Icons.newspaper),
     title: Text("News"),
-    activeColor: Colors.tealAccent,
+    activeColor: Colors.lightBlueAccent,
     inactiveColor: inactiveColor,
     textAlign: TextAlign.center,
 ),
 MyBottomNavigationBarItem(
     icon: Icon(Icons.settings),
     title: Text("Settings"),
-    activeColor: Colors.deepOrangeAccent,
+    activeColor: Colors.lightBlueAccent,
     inactiveColor: inactiveColor,
     textAlign: TextAlign.center,
 ),
@@ -191,20 +197,267 @@ MyBottomNavigationBarItem(
   Widget build(BuildContext context) {
     
     return Scaffold(
+      
        bottomNavigationBar: bottomNavigationBarWidget(),
          appBar: AppBar(
-              title: Text("CLAT App"),
-        actions: [
-         
-        ],),
-      body: currentPosition == 0 ?  Stack(
+           
+           backgroundColor: Colors.white,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/app-icon.png',width: 40, ),
+                  SizedBox(width: 10,),
+                  Text("CLAT App",style: TextStyle(color: Colors.blue),)
+                ],
+              ),
+      ),
+      body: currentPosition == 0 ? Padding(
+        padding: const EdgeInsets.only(top: 150 ,left: 20, right: 20),
+        child: Center(
+          child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 1.0,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              children: <Widget>[
+                GestureDetector(
+                      onTap: () => {  
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const AboutPage()),
+  )},
+                  child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: Stack(
+                  children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        
+                        color: Colors.blueAccent,
+                        image: DecorationImage(image: NetworkImage("https://hbr.org/resources/images/article_assets/2022/02/Feb22_23_3597544.jpg"),fit: BoxFit.cover)
+                     
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black,
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "About CLAT",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 24.0,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                           
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                              ),
+                            ),
+                          ),
+                ),
+          GestureDetector(
+            onTap: () async {
+             await launchUrl(Uri.parse("https://law.careers360.com/articles/clat-syllabus"));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        image: DecorationImage(fit: BoxFit.cover,image: NetworkImage("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/07/15/985341-neet-2021-study-material.jpg"))
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black,
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Syllabus",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 24.0,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                           
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+            Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NewsPage()),
+      );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        
+                        color: Colors.orange,
+                        image: DecorationImage(
+                        fit: BoxFit.cover,
+                          image: NetworkImage("https://static3.depositphotos.com/1004325/185/i/450/depositphotos_1853470-stock-photo-news.jpg")),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black,
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "News",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 24.0,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                           
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+               GestureDetector(
+                 onTap: () async { await launchUrl(Uri.parse("https://www.careerindia.com/entrance-exam/clat-question-papers-e29.html")); },
+                 child: Padding(
+                           padding: const EdgeInsets.only(bottom: 8.0),
+                           child: ClipRRect(
+                             borderRadius: BorderRadius.circular(4),
+                             child: Stack(
+                  children: [
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        
+                        color: Colors.orange,
+                        image: DecorationImage(fit:BoxFit.cover, image: NetworkImage("https://media.istockphoto.com/photos/miniature-house-and-many-question-marks-on-white-papers-house-with-picture-id694294788?k=20&m=694294788&s=612x612&w=0&h=IYKMo43ttNj0RWLPS_V_TX0mO0zqqYIXRmh51pQJkR4="))
+                     
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black,
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Previous year papers",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 24.0,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                           
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                             ),
+                           ),
+                         ),
+               )],
+                
+              ),
+        ),
+      ) : currentPosition == 1 ? Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Colors.deepPurple,
-                Colors.deepPurpleAccent,
-              ]),
+             
             ),
           ),
           SafeArea(
@@ -214,6 +467,7 @@ MyBottomNavigationBarItem(
                   SizedBox(height: 20,),
                   // QuizSearchView(),
                   Obx(() {
+                  
                     var categories = Get.find<QuizController>().categories;
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -221,9 +475,10 @@ MyBottomNavigationBarItem(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: categories.length,
+
                         itemBuilder: (_, index) => QuizCategoryCard(
                           categories[index],
-                          image: quizImages[index % (quizImages.length)],
+                          image: quizImages[index],
                         ),
                       ),
                     );
@@ -233,16 +488,9 @@ MyBottomNavigationBarItem(
             ),
           ),
         ],
-      ) : currentPosition == 1 ? Stack(
+      ) : currentPosition == 2 ? Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Colors.deepPurple,
-                Colors.deepPurpleAccent,
-              ]),
-            ),
-          ),
+          
           SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -250,19 +498,28 @@ MyBottomNavigationBarItem(
                    FutureBuilder<News>(
             future: futureNews,
             builder: (context, snapshot) {
+              
               if (snapshot.hasData) {
-                return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data!.articles!.length,
-                        itemBuilder: (_, index) => NewsCard(
-                          title: snapshot.data!.articles![index].title,
-                          image: snapshot.data!.articles![index].urlToImage,
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data!.articles!.length,
+                          itemBuilder: (_, index) => GestureDetector(
+                             onTap: () async{
+                      await launchUrl(Uri.parse(snapshot.data!.articles![index].url));
+                    },
+                            child: NewsCard(
+                              title: snapshot.data!.articles![index].title,
+                              image: snapshot.data!.articles![index].urlToImage ?? "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
+                            ),
+                          ),
                         ),
                       ),
-                    );
+                );
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
@@ -283,8 +540,7 @@ MyBottomNavigationBarItem(
           SettingsSection(
             title: Text("General"),
             tiles: [
-              SettingsTile(title: Text("Language"),
-              leading: Icon(Icons.language),),
+              
               SettingsTile(
                 title: Text("Log out"),
                

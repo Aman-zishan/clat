@@ -123,6 +123,14 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
+                               style: ButtonStyle(
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(18.0),
+    
+    )
+  )
+),
                                 
                                 child: Text("Login"),
                                 onPressed: () async {

@@ -36,9 +36,11 @@ class QuizCategoryCard extends StatelessWidget {
               Container(
                 height: 200,
                 decoration: BoxDecoration(
+                  
                   color: Colors.black45,
                   image: DecorationImage(
-                      image: AssetImage("assets/" + image + ".webp")),
+                    fit: BoxFit.cover,
+                      image: NetworkImage(image)),
                 ),
               ),
               Positioned(
